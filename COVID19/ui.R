@@ -26,9 +26,20 @@ shinyUI(fluidPage(
     # Sidebar with a slider input for the value range of confirmed cases
     sidebarLayout(
         sidebarPanel(
-            selectInput("metric", "Select Metric for Bubble Color & Size:", vars, selected = "Confirmed"),
+            h4("Description"),
+            p("This Shiny app visualizes COVID-19 data in the US on an interactive map. It shows one of the following three metrics per state:"),
+            p("- Confirmed Cases"),
+            p("- Fatalities"),
+            p("- Incident Rate (per 100k Persons)"),
+            p("Circles are sized and colored by value of the chosen metric of interest. The app also allows you to filter for only the top N states with the highest values of the chosen metric (default: top 20 states with highest confirmed case count)."),
+            p("(Data from November 15th 2020, source: ", a("Johns Hopkins University)", href="https://github.com/CSSEGISandData/COVID-19")),
+            br(),
+            h4("How to Use"),
+            p("Use the ", strong("dropdown menu"), "to choose the metric of interest to be shown on the map:"),
+            selectInput("metric", NULL, vars, selected = "Confirmed"),
+            p("Use the ", strong("slider"), "to display only the top N states by chosen metric:"),
             sliderInput("top_n",
-                            "Select Top N Value for Filtering:",
+                            NULL,
                             min = 0,
                             max = 60,
                             step = 1,

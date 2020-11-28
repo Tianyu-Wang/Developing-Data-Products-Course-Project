@@ -22,18 +22,23 @@ shinyServer(function(input, output) {
     
     output$covidMap <- renderLeaflet({
         inputMetric <- input$metric
+        labels <- c(
+            "Confirmed" = "Confirmed Cases",
+            "Deaths" = "Fatalities",
+            "Incident_Rate" = "Incident Rate"
+        )
         
         # filter data based on input$metric from ui.R
         plotdata <- data %>% 
             top_n(input$top_n, get(inputMetric))
         
         # initialize color palette based on input$metric from ui.R
-        qpal <- colorQuantile("Reds", plotdata[[inputMetric]], n = 9)
+        qpal <- colorQuantile("YlOrRd", plotdata[[inputMetric]], n = 9)
         
         # initialize label content based on input$metric from ui.R
-        content <- paste(plotdata$Province_State,
-                         ": ",
-                         plotdata[[inputMetric]]
+        content <- paste(labels[inputMetric], ": ",
+                         plotdata[[inputMetric]],
+                         " (", plotdata$Province_State, ")"
         )
         
         # load map
